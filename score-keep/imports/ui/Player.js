@@ -10,14 +10,17 @@ export default class PlayerComponent extends Component {
 
   render() {
     const player = this.props.player;
+    const itemClassName = `item item--position-${player.rank}`;
 
     return (
       <div>
-        <div key={player._id} className="item">
+        <div key={ player._id } className={itemClassName}>
           <div className="player">
             <div>
-              <h3 className="player__name">{player.name}</h3>
-              <p className="player__stats">{player.score}</p>
+              <h3 className="player__name">{ player.name }</h3>
+              <p className="player__stats">
+                { this.props.player.position } place - { player.score } point(s).
+              </p>
             </div>
             <div className="player__actions">
               <button className="button button--round" onClick={() => this.increasePlayerScore(player, 1)}>+1</button>
