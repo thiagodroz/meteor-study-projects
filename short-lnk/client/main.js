@@ -1,19 +1,23 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
+import { BrowserRouter as Router, Route, browserHistory, Switch } from 'react-router-dom';
 
 import SignupComponent from '../imports/ui/Signup';
 import LoginComponent from '../imports/ui/Login';
 import LinkComponent from '../imports/ui/Link';
-import NotFountComponent from '../imports/ui/NotFound';
+import NotFoundComponent from '../imports/ui/NotFound';
 
 const routes = (
   <Router history={ browserHistory }>
-    <Route path="/" component={ LoginComponent } />
-    <Route path="/signup" component={ SignupComponent } />
-    <Route path="/links" component={ LinkComponent } />
-    <Route path="*" component={ NotFountComponent } />
+    <div>
+      <Switch>
+        <Route path="/" exact component={ LoginComponent } />
+        <Route path="/signup" component={ SignupComponent } />
+        <Route path="/links" component={ LinkComponent } />
+        <Route component={ NotFoundComponent } />
+      </Switch>
+    </div>
   </Router>
 );
 
