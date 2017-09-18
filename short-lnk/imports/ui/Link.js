@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 import { Links } from '../api/links';
@@ -15,7 +16,7 @@ export default class LinkComponent extends Component {
     e.preventDefault();
 
     if (url) {
-      Links.insert({ url });
+      Meteor.call('links.insert', url);
       this.refs.url.value = '';
     }
   }
