@@ -47,10 +47,13 @@ export default class LinksListItemComponent extends Component {
         <p>{ url }</p>
         <p>{ shortUrl }</p>
         { this.renderStats() }
-        <button ref="copy" data-clipboard-text={ shortUrl }>
+        <a className="button button--pill button--link" href={ this.props.shortUrl } target="_blank">
+          Visit
+        </a>
+        <button className="button button--pill" ref="copy" data-clipboard-text={ shortUrl }>
           { this.state.justCopied ? 'Copied' : 'Copy' }
         </button>
-        <button onClick={() => {
+        <button className="button button--pill" onClick={() => {
             Meteor.call('links.setVisibility', _id, !visible)
           }}>
           { visible ? 'Hide' : 'Unhide' }

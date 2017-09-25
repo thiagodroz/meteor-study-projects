@@ -8,10 +8,12 @@ export default class AddLinkComponent extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
 
     this.state = {
       url: '',
-      isOpen: false
+      isOpen: false,
+      error: ''
     };
   }
 
@@ -20,13 +22,13 @@ export default class AddLinkComponent extends Component {
 
     e.preventDefault();
 
-    if (url) {
-      Meteor.call('links.insert', url, (err, res) => {
-        if (!err) {
-          this.setState({ url: '', isOpen });
-        }
-      });
-    }
+    Meteor.call('links.insert', url, (err, res) => {
+      if (!err) {
+        this.handleModalClose();
+      } else {
+        this.setState({ error: err.reason });
+      }
+    });
   }
 
   onChange(e) {
@@ -35,14 +37,27 @@ export default class AddLinkComponent extends Component {
     });
   }
 
+  handleModalClose() {
+    this.setState({
+      isOpen: false,
+      url: '',
+      error: ''
+    });
+  }
+
   render() {
     const { isOpen } = this.state;
 
     return (
       <div>
-        <button onClick={() => this.setState({ isOpen: true })}>+ Add Link</button>
-        <Modal isOpen={ isOpen } contentLabel="Add link">
-          <p>Add Link</p>
+        <button className="button" onClick={() => this.setState({ isOpen: true })}>+ Add Link</button>
+        <Modal 
+          isOpen={ isOpen }
+          contentLabel="Add link"
+          onAfterOpen={ () => this.refs.url.focus() }
+          onRequestClose={ this.handleModalClose }>
+          <h1>Add Link</h1>
+          { this.state.error ? <p>{ this.state.error }</p> : undefined }
           <form onSubmit={ this.onSubmit }>
             <input
               type="text"
@@ -52,7 +67,7 @@ export default class AddLinkComponent extends Component {
               onChange={ this.onChange } />
             <button>Add Link</button>
           </form>
-          <button onClick={() => {this.setState({ isOpen: false, url: '' })}}>Cancel</button>
+          <button onClick={ this.handleModalClose }>Cancel</button>
         </Modal>
       </div>
     );
