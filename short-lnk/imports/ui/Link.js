@@ -10,9 +10,11 @@ export default class LinkComponent extends Component {
     return (
       <div>
         <PrivateHeaderComponent title="Your Links" />
-        <LinksListFiltersComponent />
-        <AddLinkComponent />
-        <LinksListComponent />
+        <div className="page-content">
+          <LinksListFiltersComponent />
+          <AddLinkComponent />
+          <LinksListComponent />
+        </div>
       </div>
     );
   }

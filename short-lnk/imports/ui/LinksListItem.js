@@ -36,16 +36,16 @@ export default class LinksListItemComponent extends Component {
       visitedMessage = `(visited ${ moment(lastVisitedAt).fromNow() })`;
     }
 
-    return <p>{ visitedCount } { visitMessage } - { visitedMessage }</p>;
+    return <p className="item__message">{ visitedCount } { visitMessage } - { visitedMessage }</p>;
   }
 
   render() {
     const { _id, url, shortUrl, visible } = this.props;
 
     return (
-      <div>
-        <p>{ url }</p>
-        <p>{ shortUrl }</p>
+      <div className="item">
+        <h2>{ url }</h2>
+        <p className="item__message">{ shortUrl }</p>
         { this.renderStats() }
         <a className="button button--pill button--link" href={ this.props.shortUrl } target="_blank">
           Visit
