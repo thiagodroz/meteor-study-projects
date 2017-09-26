@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
 
 export default class SignupComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: ''
+      error: '',
+      logged: false
     };
   }
 
@@ -24,7 +25,7 @@ export default class SignupComponent extends Component {
       if (err) {
         this.setState({ error: err.reason });
       } else {
-        this.setState({ error: '' });
+        this.setState({ error: '', logged: true });
       }
     });
   }
@@ -45,6 +46,7 @@ export default class SignupComponent extends Component {
 
           <Link to="/">Already have an account?</Link>
         </div>
+        { this.state.logged ? <Redirect to="/links" push /> : null }
       </div>
     );
   }

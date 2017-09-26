@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 
 export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: ''
+      error: '',
+      logged: false
     };
   }
 
@@ -20,7 +21,7 @@ export default class LoginComponent extends Component {
       if (err) {
         this.setState({ error: 'Unable to login. Check email and password.' });
       } else {
-        this.setState({ error: '' });
+        this.setState({ error: '', logged: true });
       }
     });
   }
@@ -39,8 +40,9 @@ export default class LoginComponent extends Component {
             <button className="button">Login</button>
           </form>
 
-          <Link to="/signup">Create an account?</Link>
+          <Link to="/signup">Need an account?</Link>
         </div>
+        { this.state.logged ? <Redirect to="/links" push /> : null }
       </div>
     );
   }
